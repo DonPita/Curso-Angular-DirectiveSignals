@@ -1,6 +1,9 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, computed, inject, signal } from '@angular/core';
 import { UsersService } from '../../services/users-service.service';
 import { User } from '../../interfaces/user-request.interface';
+import { combineLatest } from 'rxjs';
+import { NotExpr, computeMsgId } from '@angular/compiler';
+import { CustomLabelDirective } from '../../../shared/directives/custom-label.directive';
 
 @Component({
   templateUrl: './user-info-page.component.html',
@@ -10,6 +13,13 @@ export class UserInfoPageComponent implements OnInit {
 
   private usersService = inject(UsersService);
   public userId = signal(1);
+  public fullName = computed<string>(() => {
+    if (!this.currentUser) {
+      return 'Usuario no encontrado';
+    }
+
+    return `${this.currentUser()?.first_name} ${this.currentUser()?.last_name}`;
+  })
 
   //Usuario actual puede existir o no
   public currentUser = signal<User | undefined>(undefined);
@@ -28,8 +38,15 @@ export class UserInfoPageComponent implements OnInit {
     this.currentUser.set(undefined); //Para que desaparezca entre cargas
 
     this.usersService.getUserById(id)
-      .subscribe(user => {
-        this.currentUser.set(user)
+      .subscribe({
+        next: (user) => {
+          this.currentUser.set(user);
+          this.userWasFound.set(true);
+        },
+        error: () => {
+          this.userWasFound.set(false);
+          this.currentUser.set(undefined);
+        }
       });
   }
 }
