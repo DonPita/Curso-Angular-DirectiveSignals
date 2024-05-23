@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { ProductsRoutingModule } from './products-routing.module';
 import { ProductPageComponent } from './pages/product-page/product-page.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -12,6 +13,7 @@ import { ProductPageComponent } from './pages/product-page/product-page.componen
   imports: [
     CommonModule,
     ProductsRoutingModule,
+    ReactiveFormsModule //Para usar formularios reactivos
   ]
 })
 export class ProductsModule { }
