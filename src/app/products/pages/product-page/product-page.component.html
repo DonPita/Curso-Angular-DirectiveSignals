@@ -14,7 +14,9 @@
     </div>
 
     <div class="col-auto">
-      <span customLabel [colorDir]="color"><b>Temporal</b></span>
+      <span customLabel [colorDir]="color" [errors]="myForm.get('name')?.errors">
+        <b></b>
+      </span>
     </div>
 
   </div>
