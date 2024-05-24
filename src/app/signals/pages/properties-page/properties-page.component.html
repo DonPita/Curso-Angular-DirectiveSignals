@@ -8,6 +8,7 @@
       class="form-control mb-3"
       #txtEmail
       (input)="onFieldUpdated('email', txtEmail.value)"
+      [value]="user().email"
     />
 
     <input
@@ -15,6 +16,7 @@
       class="form-control mb-3"
       #txtFirstName
       (input)="onFieldUpdated('first_name', txtFirstName.value)"
+      [value]="user().first_name"
     />
 
     <input
@@ -22,13 +24,14 @@
       class="form-control mb-3"
       #txtLastName
       (input)="onFieldUpdated('last_name', txtLastName.value)"
+      [value]="user().last_name"
     />
   </div>
 
   <div class="col-6">
     <!-- Data del usuario -->
     <pre>
-      {{ 'asd' }}
+      {{ user() | json }}
     </pre>
   </div>
 </div>
